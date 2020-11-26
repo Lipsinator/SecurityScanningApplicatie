@@ -83,5 +83,5 @@ rm -rf kubehunterjob.yaml
 echo -e "\e[32m================================="
 echo -e "+ Exiting security application +"
 echo -e "=================================\e[0m"
-echo -e "\e[32mAll logging is stored under the 'Logs' folder\e[0m"
+echo -e "\e[32mAll logging is stored under the 'Securityscanogs' folder\e[0m"
  
