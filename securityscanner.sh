@@ -10,11 +10,11 @@
 # 20-11-2020 - ADDED - now installs polaris.
 #	     - ADDED - now waits for the kube hunter pod to deploy before requesting logs.
 # 26-11-2020 - ADDED - now gathers quay vulnerability reports more efficiently.
-#            - ADDED - now creates own folders and removes existing jobs and used yaml files
+#            - ADDED - now creates own folders and removes existing jobs and used yaml files.
+# 30-11-2020 - ADDED - now formats reports optimally for logstash.
 #
 #
-# 
-
+ 
 clear
 echo -e "\e[32m================================="  
 echo -e "+ Starting security application +"
@@ -25,7 +25,10 @@ mkdir Securityscanlogs
 #------------------------------------- Quay Security Operator ----------------------------------
 
 # get all vulnerabilities from all namespaces
-kubectl get imagemanifestvuln --all-namespaces -o json >Securityscanlogs/QuaySecurityScanVulnerabilityReport.txt
+kubectl get imagemanifestvuln --all-namespaces -o json > Securityscanlogs/QuaySecurityScanVulnerabilityReport.txt
+echo "                    {
+                        "name": "final-vuln",
+" >> Securityscanlogs/QuaySecurityScanVulnerabilityReport.txt
 
 #-----------------------------------------------------------------------------------------------
 
@@ -70,9 +73,10 @@ sleep 20
 
 # format the logs from kube-hunter to a test file
 oc logs `oc get pods | awk '{print $1, $8}' |  sed 1,1d` > Securityscanlogs/kubehunterlogs.txt  
+sed -i '/- location: /,$!d' Securityscanlogs/kubehunterlogs.txt 
+echo "- location: " >> Securityscanlogs/kubehunterlogs.txt
 
-#----------------------------------------------------------------------------------------------
-
+#---------------------------------------------------------------------------------------------
 
 # install polaris to check for kubernetes configuration best practices
 kubectl apply -f https://github.com/FairwindsOps/polaris/releases/latest/download/dashboard.yaml
@@ -84,4 +88,5 @@ echo -e "\e[32m================================="
 echo -e "+ Exiting security application +"
 echo -e "=================================\e[0m"
 echo -e "\e[32mAll logging is stored under the 'Securityscanlogs' folder\e[0m"
+
  
