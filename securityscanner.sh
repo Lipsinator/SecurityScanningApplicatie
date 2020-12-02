@@ -1,6 +1,6 @@
 #! /bin/bash
 #==============================================================
-# Security scanner script - Christiaan Lips 
+# Security scanner script - Christiaan Lips
 #==============================================================
 # CHANGELOG
 #==============================================================
@@ -20,15 +20,15 @@ echo -e "\e[32m================================="
 echo -e "+ Starting security application +"
 echo -e "=================================\e[0m"
 echo -e "\e[31mPlease note that in order for this application to work you need to be logged in on your OpenShift platform and have root access\e[0m"
-mkdir Securityscanlogs
+mkdir SecurityLogs
 
 #------------------------------------- Quay Security Operator ----------------------------------
 
 # get all vulnerabilities from all namespaces
-kubectl get imagemanifestvuln --all-namespaces -o json > Securityscanlogs/QuaySecurityScanVulnerabilityReport.txt
+kubectl get imagemanifestvuln --all-namespaces -o json > SecurityLogs/QuaySecurityScanVulnerabilityReport.txt
 echo "                    {
                         "name": "final-vuln",
-" >> Securityscanlogs/QuaySecurityScanVulnerabilityReport.txt
+" >> SecurityLogs/QuaySecurityScanVulnerabilityReport.txt
 
 #-----------------------------------------------------------------------------------------------
 
@@ -72,9 +72,9 @@ echo -e "\e[32mPlease wait 20 seconds for the kube-hunter pod to deploy propperl
 sleep 20
 
 # format the logs from kube-hunter to a test file
-oc logs `oc get pods | awk '{print $1, $8}' |  sed 1,1d` > Securityscanlogs/kubehunterlogs.txt  
-sed -i '/- location: /,$!d' Securityscanlogs/kubehunterlogs.txt 
-echo "- location: " >> Securityscanlogs/kubehunterlogs.txt
+oc logs `oc get pods | awk '{print $1, $8}' |  sed 1,1d` > SecurityLogs/kubehunterlogs.txt  
+sed -i '/- location: /,$!d' SecurityLogs/kubehunterlogs.txt 
+echo "- location: " >> SecurityLogs/kubehunterlogs.txt
 
 #---------------------------------------------------------------------------------------------
 
@@ -87,6 +87,7 @@ rm -rf kubehunterjob.yaml
 echo -e "\e[32m================================="
 echo -e "+ Exiting security application +"
 echo -e "=================================\e[0m"
-echo -e "\e[32mAll logging is stored under the 'Securityscanlogs' folder\e[0m"
+echo -e "\e[32mAll logging is stored under the 'SecurityLogs' folder\e[0m"
+
 
  
