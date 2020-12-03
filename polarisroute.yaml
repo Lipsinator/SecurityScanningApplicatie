@@ -1,0 +1,16 @@
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: polaris-route
+  namespace: polaris
+  labels:
+    app: polaris
+spec:
+  to:
+    kind: Service
+    name: polaris-dashboard
+    weight: 100
+  port:
+    targetPort: http-dashboard
+  wildcardPolicy: None
+Annotations is an unstructured key value map stored with a resource that may be set by external tools to store and retrieve arbitrary metadata. They 
