@@ -1,5 +1,3 @@
-
-
 #! /bin/bash
 #==============================================================
 # Security scanner script - Christiaan Lips
@@ -15,7 +13,7 @@
 #            - ADDED - now creates own folders and removes existing jobs and used yaml files.
 # 30-11-2020 - ADDED - now formats reports optimally for logstash.
 # 3-12-2020  - ADDED - now automatically creates route for polaris dashboard.
-#
+# 4-12-2020  - ADDED - delete any old kube-hunter job before creating a new one.
  
 clear
 echo -e "\e[32m================================="  
@@ -42,6 +40,9 @@ echo "                    {
 # create and switch to the kunehunter namespace
 oc create ns kubehunter
 oc project kubehunter
+
+# delete the old kube-hunter job
+oc delete job kube-hunter
 
 # create the job with substituted nodes
 echo "apiVersion: batch/v1
@@ -96,4 +97,5 @@ echo -e "\e[32m================================="
 echo -e "+ Exiting security application +"
 echo -e "=================================\e[0m"
 echo -e "\e[32mAll logging is stored under the 'SecurityLogs' folder\e[0m"
+
  
