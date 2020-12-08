@@ -14,6 +14,7 @@
 # 30-11-2020 - ADDED - now formats reports optimally for logstash.
 # 3-12-2020  - ADDED - now automatically creates route for polaris dashboard.
 # 4-12-2020  - ADDED - delete any old kube-hunter job before creating a new one.
+# 8-12-2020  - ADDED - errorlog.txt now contains any errors that may occur during launch.
  
 clear
 echo -e "\e[32m================================="  
@@ -22,7 +23,7 @@ echo -e "=================================\e[0m"
 echo -e "\e[31mPlease note that in order for this application to work you need to be logged in on your OpenShift platform and have root access.\n Please make sure that there is no namespace called 'kubehunter' when executing this script.\e[0m"
 read -p "Press any key to continue: "
 
-mkdir SecurityLogs
+mkdir SecurityLogs 2> errorlog.txt
 
 #------------------------------------- Quay Security Operator ----------------------------------
 
@@ -38,11 +39,11 @@ echo "                    {
 #------------------------------------- Kube-hunter ---------------------------------------------
 		
 # create and switch to the kunehunter namespace
-oc create ns kubehunter
-oc project kubehunter
+oc create ns kubehunter 2> errorlog.txt
+oc project kubehunter 2> errorlog.txt
 
 # delete the old kube-hunter job
-oc delete job kube-hunter
+oc delete job kube-hunter 2> errorlog.txt
 
 # create the job with substituted nodes
 echo "apiVersion: batch/v1
@@ -70,7 +71,7 @@ echo "      restartPolicy: Never
 " >> kubehunterjob.yaml
 
 # create the actual job
-kubectl create -f kubehunterjob.yaml
+kubectl create -f kubehunterjob.yaml 2> errorlog.txt
 
 # wait for the pod to deploy before proceeding
 echo -e "\e[32mPlease wait 20 seconds for the kube-hunter pod to deploy propperly\e[0m"
@@ -90,12 +91,10 @@ rm -rf kubehunterjob.yaml
 # install polaris to check for kubernetes configuration best practices
 kubectl apply -f https://github.com/FairwindsOps/polaris/releases/latest/download/dashboard.yaml
 
-kubectl create -f polarisroute.yaml
+kubectl create -f polarisroute.yaml 2> errorlog.txt
 
                                                  
 echo -e "\e[32m================================="
 echo -e "+ Exiting security application +"
 echo -e "=================================\e[0m"
 echo -e "\e[32mAll logging is stored under the 'SecurityLogs' folder\e[0m"
-
- 
