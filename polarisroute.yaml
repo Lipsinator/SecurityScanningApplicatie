@@ -13,4 +13,4 @@ spec:
   port:
     targetPort: http-dashboard
   wildcardPolicy: None
-Annotations is an unstructured key value map stored with a resource that may be set by external tools to store and retrieve arbitrary metadata. They 
+
