@@ -1,5 +1,3 @@
-#! /bin/bash
-#==============================================================
 # Security scanner script - Christiaan Lips
 #==============================================================
 # CHANGELOG
@@ -15,6 +13,7 @@
 # 3-12-2020  - ADDED - now automatically creates route for polaris dashboard.
 # 4-12-2020  - ADDED - delete any old kube-hunter job before creating a new one.
 # 8-12-2020  - ADDED - errorlog.txt now contains any errors that may occur during launch.
+# 14-12-2020 - ADDED - now automatically installs Quay Container Security Operator
  
 clear
 echo -e "\e[32m================================="  
@@ -26,6 +25,11 @@ read -p "Press any key to continue: "
 mkdir SecurityLogs 2> errorlog.txt
 
 #------------------------------------- Quay Security Operator ----------------------------------
+
+# install the quay operator
+kubectl create -f quaycontainersecurity.yaml
+echo -e "\e[32mPlease wait 2 mimutes for the Quay container security operator to deploy propperly\e[0m"
+sleep 120
 
 # get all vulnerabilities from all namespaces
 kubectl get imagemanifestvuln --all-namespaces -o json > SecurityLogs/QuaySecurityScanVulnerabilityReport.txt
