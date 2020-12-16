@@ -81,7 +81,7 @@ kubectl create -f kubehunterjob.yaml 2> errorlog.txt
 echo -e "\e[32mPlease wait 20 seconds for the kube-hunter pod to deploy propperly\e[0m"
 sleep 20
 
-# format the logs from kube-hunter to a test file
+# format the logs from the kube-hunter pod to a log file
 oc logs `oc get pods | awk '{print $1, $8}' |  sed 1,1d` > SecurityLogs/kubehunterlogs.txt  
 sed -i '/- location: /,$!d' SecurityLogs/kubehunterlogs.txt 
 echo "- location: " >> SecurityLogs/kubehunterlogs.txt
