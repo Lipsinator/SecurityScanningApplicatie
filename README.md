@@ -1,4 +1,4 @@
-# Stageopdracht: Security Scanner Applicatie
+# Stageopdracht: Security Scanning Applicatie
 Deze applicatie bied inzicht in de beveiliging van een OpenShift containerplatform.
 
 Dit wordt gerealiseerd door security scanning uit te voeren met de volgende tools:
