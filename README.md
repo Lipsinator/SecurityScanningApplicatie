@@ -18,4 +18,4 @@ Dit wordt gerealiseerd door security scanning uit te voeren met de volgende tool
 Dit script zal Kube-Hunter, Polaris en Quay Container Security Operator installeren aan de hand van meegeleverde yaml files.
 Vervolgens zal script de log bestanden verzamelen en in een map opslaan.
 
-Om de log bestanden grafisch weer te geven met een Kibana dashboard is de volgende repository opgezet: xxxxxx.nl
+Om de log bestanden grafisch weer te geven met een Kibana dashboard is de volgende repository opgezet: https://github.com/TheChrisKip/KibanaDashboardSecurityScanner.nl
