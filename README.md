@@ -12,7 +12,7 @@ Dit wordt gerealiseerd door security scanning uit te voeren met de volgende tool
 - Internet toegang of proxy
 
 # Installatie:
- 1) Pull deze repository naar het containerplatform. 
+ 1) Clone deze repository naar het OpenShift containerplatform. 
  2) start het startsecurityscanner.sh script direct op het containerplatfrom (dus niet in een container).
 
 Dit script zal Kube-Hunter, Polaris en Quay Container Security Operator installeren aan de hand van meegeleverde yaml files.
